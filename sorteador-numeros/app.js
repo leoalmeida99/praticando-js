@@ -1,13 +1,22 @@
 let getLabelTextoParagrafo = document.getElementById('resultado').querySelector('.texto__paragrafo');
+let getButtonReiniciar = document.getElementById('btn-reiniciar');
+
+let getInputQuantidade = document.getElementById('quantidade');
+let getInputDe = document.getElementById('de');
+let getInputAte = document.getElementById('ate');
 
 function sortear() {
-    let quantidadeDeNumeros = parseInt(document.getElementById('quantidade').value);
-    let doNumero = parseInt(document.getElementById('de').value);
-    let ateONumero = parseInt(document.getElementById('ate').value);
+    let quantidadeDeNumeros = getInputQuantidade.value;
+    let doNumero = getInputDe.value;
+    let ateONumero = getInputAte.value;
     let numeros = [];
+    let valorAleatorio;
 
     if (isEntradasInvalidas()) return;
-    
+
+    getButtonReiniciar.classList.remove('container__botao-desabilitado');
+    getButtonReiniciar.classList.add('container__botao');
+
     if (doNumero == ateONumero) {
         getLabelTextoParagrafo.textContent = `Números sorteados:  ${doNumero}`;
         return;
@@ -20,44 +29,16 @@ function sortear() {
     }
 
     let diferencaAteONumeroEDoNumero = ateONumero - doNumero;
-    if (Math.ceil(diferencaAteONumeroEDoNumero / 2) <= quantidadeDeNumeros) {
-        funcao(doNumero, ateONumero, diferencaAteONumeroEDoNumero, quantidadeDeNumeros);
-        return;
-    }
-
-    // if (diferencaAteONumeroEDoNumero < quantidadeDeNumeros || diferencaAteONumeroEDoNumero - 1 < quantidadeDeNumeros) {
-    //     funcao(doNumero, ateONumero, diferencaAteONumeroEDoNumero, quantidadeDeNumeros);
-    //     return;
-    // }
-
+    if (diferencaAteONumeroEDoNumero <= quantidadeDeNumeros) quantidadeDeNumeros = diferencaAteONumeroEDoNumero;
     while(quantidadeDeNumeros--) {
-
-    }
-    
-    getLabelTextoParagrafo.textContent = 'deve sortear';
-}
-
-function funcao(doNumero, ateONumero, diferencaAteONumeroEDoNumero, quantidadeDeNumeros) {
-    let numeros = [];
-    
-    for (let i = doNumero; i <= ateONumero; i++) {
-        numeros.push(i);
-    }
-    console.log(numeros);
-
-
-    let array2 = [];
-
-    debugger;
-    while (quantidadeDeNumeros--) {
-        valorAleatorio = doNumero + Math.trunc(Math.random()) * (ateONumero - doNumero);
-        array2.push(numeros[valorAleatorio]);
+        valorAleatorio = Math.floor(Math.random() * (ateONumero - doNumero + 1)) + doNumero;
+        while (numeros.includes(valorAleatorio)) {
+            valorAleatorio = Math.floor(Math.random() * (ateONumero - doNumero + 1)) + doNumero;
+        }
+        numeros.push(valorAleatorio);
     }
 
-
-    
-    console.log(numeros);
-    console.log(array2);
+    getLabelTextoParagrafo.textContent = 'Números sorteados: ' + numeros;
 }
 
 function isEntradasInvalidas() {
@@ -98,4 +79,14 @@ function isEntradasInvalidas() {
         getLabelTextoParagrafo.textContent = `O campo: ${labelsInvalidas[0].toLowerCase()}, está inválido`;
         return true;
     }
+}
+
+function reiniciar() {
+    getInputQuantidade.value = '';
+    getInputDe.value = '';
+    getInputAte.value = '';
+
+    getButtonReiniciar.classList.remove('container__botao');
+    getButtonReiniciar.classList.add('container__botao-desabilitado');
+
 }
