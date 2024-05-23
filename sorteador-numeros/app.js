@@ -6,9 +6,9 @@ let getInputDe = document.getElementById('de');
 let getInputAte = document.getElementById('ate');
 
 function sortear() {
-    let quantidadeDeNumeros = getInputQuantidade.value;
-    let doNumero = getInputDe.value;
-    let ateONumero = getInputAte.value;
+    let quantidadeDeNumeros = parseInt(getInputQuantidade.value);
+    let doNumero = parseInt(getInputDe.value);
+    let ateONumero = parseInt(getInputAte.value);
     let numeros = [];
     let valorAleatorio;
 
@@ -27,7 +27,7 @@ function sortear() {
         doNumero = ateONumero;
         ateONumero = temp;
     }
-
+    debugger;
     let diferencaAteONumeroEDoNumero = ateONumero - doNumero;
     if (diferencaAteONumeroEDoNumero <= quantidadeDeNumeros) quantidadeDeNumeros = diferencaAteONumeroEDoNumero;
     while(quantidadeDeNumeros--) {
@@ -82,11 +82,12 @@ function isEntradasInvalidas() {
 }
 
 function reiniciar() {
+    if (getButtonReiniciar.classList.contains('container__botao-desabilitado')) return;
     getInputQuantidade.value = '';
     getInputDe.value = '';
     getInputAte.value = '';
 
     getButtonReiniciar.classList.remove('container__botao');
     getButtonReiniciar.classList.add('container__botao-desabilitado');
-
+    getLabelTextoParagrafo.textContent = 'Números sorteados:  nenhum até agora';
 }
