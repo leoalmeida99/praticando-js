@@ -29,6 +29,8 @@ function atualizarCarrinho(nomeProduto, quantidadeProduto, valorProduto) {
 }
 
 function atualizarValor(valorProduto, quantidadeProduto) {
+    let valorTotal;
+    let valorAtual;
     if (tagValorTotal.textContent == '') {
         valorAtual = 0;
     } else {
